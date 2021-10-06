@@ -1,0 +1,108 @@
+[
+  {
+    "name": "Клиент ДругогоБанка Второй",
+    "bank": "ALPHA",
+    "account": []
+  },
+  {
+    "name": "Клиент ДругогоБанка Первый",
+    "bank": "VTB",
+    "account": []
+  },
+  {
+    "name": "Клиент Сбербанка Второй",
+    "bank": "SBERBANK",
+    "account": [
+      {
+        "number": "11112222333344445556",
+        "accountType": "DOLLAR",
+        "cards": [
+          {
+            "number": "4444111122223337",
+            "balance": 20.00,
+            "type": "MASTERCARD",
+            "expireDate": "2023-01-01"
+          }
+        ]
+      },
+      {
+        "number": "11112222333344445558",
+        "accountType": "MULTI",
+        "cards": [
+          {
+            "number": "4444111122224445",
+            "balance": 100.00,
+            "type": "MIR",
+            "expireDate": "2021-01-01"
+          }
+        ]
+      },
+      {
+        "number": "11112222333344445557",
+        "accountType": "EUR",
+        "cards": [
+          {
+            "number": "4444111122223338",
+            "balance": 0.00,
+            "type": "MIR",
+            "expireDate": "2023-01-01"
+          }
+        ]
+      },
+      {
+        "number": "11112222333344445559",
+        "accountType": "MULTI",
+        "cards": [
+          {
+            "number": "64444111122224445",
+            "balance": 100000.00,
+            "type": "MIR",
+            "expireDate": "2024-01-01"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Клиент Сбербанка Первый",
+    "bank": "SBERBANK",
+    "account": [
+      {
+        "number": "11112222333344446666",
+        "accountType": "DOLLAR",
+        "cards": [
+          {
+            "number": "4444111122224444",
+            "balance": 0.00,
+            "type": "MIR",
+            "expireDate": "2023-01-01"
+          },
+          {
+            "number": "4444111122223339",
+            "balance": 1.15,
+            "type": "MIR",
+            "expireDate": "2023-01-01"
+          }
+        ]
+      },
+      {
+        "number": "11112222333344445555",
+        "accountType": "RUB",
+        "cards": [
+          {
+            "number": "4444111122223336",
+            "balance": 0.00,
+            "type": "MASTERCARD",
+            "expireDate": "2022-01-01"
+          },
+          {
+            "number": "4444111122223333",
+            "balance": 0.00,
+            "type": "VISA",
+            "expireDate": "2021-01-01"
+          }
+        ]
+      }
+    ]
+  }
+]
