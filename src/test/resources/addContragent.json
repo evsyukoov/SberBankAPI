@@ -1,0 +1,12 @@
+{
+  "name":"Evsukov Denis Konstantinovich",
+  "bank":"VTB",
+  "account":
+  [
+    {
+      "number":"45672222333344445556",
+      "accountType":"MULTI",
+      "cards":[]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Клиент ДругогоБанка Второй",
+    "bank": "ALPHA",
+    "account": [
+      {
+        "number": "12342222333344445559",
+        "accountType": "DOLLAR",
+        "cards": [
+          {
+            "number": "7444411122224445",
+            "balance": 1.1,
+            "type": "MASTERCARD",
+            "expireDate": "2025-01-01"
+          }
+        ]
+      }
+    ]
+  }
+]
