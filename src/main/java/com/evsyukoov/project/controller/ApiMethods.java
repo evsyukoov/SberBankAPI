@@ -11,6 +11,7 @@ import com.evsyukoov.project.service.BankService;
 import com.evsyukoov.project.utils.RestHelper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,11 +27,12 @@ import java.util.stream.Collectors;
 @RestController
 public class ApiMethods {
 
+    @Autowired
+    BankService bankService;
+
     @GetMapping(path = "/service/bank/v1/showCards")
     @ApiOperation(value = "Получение всех карт привязанных к счету", response = RestCard.class, responseContainer = "List")
     public List<RestCard> showCards(@RequestParam(value = "accountNumber") String number) {
-        BankService bankService = new BankService();
-        bankService.setCardDao(new CardDao());
         return bankService.getAllCards(number)
                 .stream()
                 .map(RestHelper::convertCard2Rest)
@@ -41,12 +43,10 @@ public class ApiMethods {
     @ApiOperation(value = "Пополнение баланса выбранной карты", response = String.class)
     public RestCard incrementBalance(@RequestParam(value = "cardNumber") String cardNumber,
                                                    @RequestParam(value = "money") String money) {
-        BankService bankService = new BankService();
         BigDecimal num = new BigDecimal(money.replace(",", "."));
         if (num.compareTo(BigDecimal.ZERO) <= 0) {
             throw new ValidationException(Message.UNCORRECT_PARAMETR);
         }
-        bankService.setCardDao(new CardDao());
         return RestHelper.convertCard2Rest(
                 bankService.incrementBalance(cardNumber, num));
     }
@@ -55,8 +55,6 @@ public class ApiMethods {
     @ApiOperation(value = "Информация о балансе выбранной карты", response = String.class)
     public HashMap<String, String> getBalance(@RequestParam(value = "cardNumber") String cardNumber)
             throws RuntimeException {
-        BankService bankService = new BankService();
-        bankService.setCardDao(new CardDao());
         HashMap<String, String> response = new HashMap<>();
         response.put("balance", bankService.getBalance(cardNumber).toString());
         return response;
@@ -67,9 +65,6 @@ public class ApiMethods {
     @ApiImplicitParam(name = "type", defaultValue = "VISA", value = "VISA, MASTERCARD, MIR")
     public RestCard createCard(@RequestParam(value = "accountNumber") String accountNumber,
                                @RequestParam(value = "type") String type) {
-        BankService bankService = new BankService();
-        bankService.setCardDao(new CardDao());
-        bankService.setAccountDao(new AccountDao());
         return RestHelper.convertCard2Rest(
                 bankService.createNewCard(accountNumber, type));
     }

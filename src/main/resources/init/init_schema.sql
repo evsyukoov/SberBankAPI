@@ -14,7 +14,8 @@ create table IF NOT EXISTS CONTRAGENTS
     CONTRAGENT_ID INTEGER auto_increment
         primary key,
     BANK          INTEGER,
-    NAME          VARCHAR(255)
+    NAME          VARCHAR(255),
+    VERSION       INTEGER
 );
 
 create table IF NOT EXISTS ACCOUNTS
@@ -24,7 +25,8 @@ create table IF NOT EXISTS ACCOUNTS
     ACCOUNT_NUMBER VARCHAR(255),
     ACCOUNT_TYPE   INTEGER,
     CONTRAGENT_ID  INTEGER,
-    foreign key (CONTRAGENT_ID) references CONTRAGENTS (CONTRAGENT_ID)
+    foreign key (CONTRAGENT_ID) references CONTRAGENTS (CONTRAGENT_ID),
+    VERSION INTEGER
 );
 
 create index IF NOT EXISTS IDX_ACCOUNT_NUMBER
@@ -41,5 +43,6 @@ create table IF NOT EXISTS CARDS
     TYPE        INTEGER,
     EXPIREDATE  TIMESTAMP,
     ACCOUNT_ID  INTEGER,
-    foreign key (ACCOUNT_ID) references ACCOUNTS (ACCOUNT_ID)
+    foreign key (ACCOUNT_ID) references ACCOUNTS (ACCOUNT_ID),
+    VERSION INTEGER
 )

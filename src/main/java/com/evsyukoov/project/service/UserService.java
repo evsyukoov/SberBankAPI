@@ -14,9 +14,11 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
+    @Autowired
+    UserDao dao;
+
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        DAO<User> dao = new UserDao();
         User user = dao.getEntity(login);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("Не найден пользователь с логином %s",

@@ -24,6 +24,10 @@ public class Contragent {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "contragent")
     private Set<Account> accounts = new HashSet<>(0);
 
+    @Version
+    @Column(name = "version")
+    private long version;
+
     public int getId() {
         return id;
     }
@@ -54,5 +58,13 @@ public class Contragent {
 
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

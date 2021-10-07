@@ -12,6 +12,7 @@ import com.evsyukoov.project.model.server.Account;
 import com.evsyukoov.project.model.server.Card;
 import com.evsyukoov.project.model.server.Contragent;
 import com.evsyukoov.project.utils.CommonUtils;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -21,11 +22,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Service
 public class ContragentService {
 
-    private ContragentDao dao;
+    private final ContragentDao dao;
 
-    private CardDao cardDao;
+    private final CardDao cardDao;
+
+    public ContragentService(ContragentDao dao, CardDao cardDao) {
+        this.dao = dao;
+        this.cardDao = cardDao;
+    }
 
     public List<Contragent> getContragents(String bankReq) {
         return bankReq == null ? dao.getAllContragents() :
@@ -94,9 +101,8 @@ public class ContragentService {
             throw new ValidationException(String.format(Message.NOT_ENOUGH_MONEY, cardFrom.getCardNumber()));
         }
         cardFrom.setBalance(cardFrom.getBalance().subtract(money));
-        cardDao.update(cardFrom);
         cardTo.setBalance(cardTo.getBalance().add(money));
-        cardDao.update(cardTo);
+        cardDao.update(cardTo, cardFrom);
         return Stream.of(cardFrom, cardTo).
                 collect(Collectors.toList());
     }
@@ -114,13 +120,5 @@ public class ContragentService {
                         .flatMap(Collection::stream)
                         .anyMatch(account -> account.getAccountNumber().equals(accountNumber));
 
-    }
-
-    public void setDao(ContragentDao dao) {
-        this.dao = dao;
-    }
-
-    public void setCardDao(CardDao cardDao) {
-        this.cardDao = cardDao;
     }
 }
