@@ -16,6 +16,7 @@ import com.evsyukoov.project.service.ContragentService;
 import com.evsyukoov.project.utils.RestHelper;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,14 @@ import java.util.stream.Collectors;
 @RestController
 public class ContragentApiMethods {
 
+    @Autowired
+    ContragentService contragentService;
+
     @GetMapping(path = "/service/bank/v1/showAllContragents")
     @ApiOperation(value = "Получение полной информации по контрагентам, опционально - передать банк контрагентов", response = RestContragent.class, responseContainer = "List")
     @ApiImplicitParam(name = "bank", defaultValue = "SBERBANK", value = "Банк контрагента (опционально): SBERBANK, VTB, ALPHA")
     public List<RestContragent> showContragents(@RequestParam(value = "bank", required = false) String bank) {
-        ContragentService service = new ContragentService();
-        service.setDao(new ContragentDao());
-        return service.getContragents(bank).stream()
+        return contragentService.getContragents(bank).stream()
                 .map(RestHelper::convertAgent2Rest)
                 .sorted(Comparator.comparing(RestContragent::getName))
                 .collect(Collectors.toList());
@@ -44,18 +46,14 @@ public class ContragentApiMethods {
     @PostMapping(path = "/service/bank/v1/addContragent")
     @ApiOperation(value = "Создание нового контрагента", response = RestContragent.class)
     public RestContragent addContragent(@RequestBody AddContragentRequestParams params) {
-        ContragentService service = new ContragentService();
-        service.setDao(new ContragentDao());
         return RestHelper.convertAgent2Rest(
-                service.createNewAgent(params));
+                contragentService.createNewAgent(params));
     }
 
     @PostMapping(path = "/service/bank/v1/doTransaction")
     @ApiOperation(value = "Перевод с карты на карту", response = RestContragent.class)
     public List<RestCard> doTransaction(@RequestBody TransactionRequestParams params) {
-        ContragentService service = new ContragentService();
-        service.setCardDao(new CardDao());
-        return service.doTransaction
+        return contragentService.doTransaction
                         (params.getCardNumberFrom(), params.getCardNumberTo(), params.getMoney())
                 .stream()
                 .map(RestHelper::convertCard2Rest)

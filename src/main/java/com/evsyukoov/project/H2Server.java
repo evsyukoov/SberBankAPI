@@ -6,6 +6,9 @@ import org.h2.tools.RunScript;
 import org.h2.tools.Server;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.sql.*;
 
 public class H2Server {
@@ -28,11 +31,11 @@ public class H2Server {
 
     private static void initDb() throws Exception {
         Connection connection = DriverManager.getConnection("jdbc:h2:~/BankTask", "sa","");
-        RunScript.execute(connection, new FileReader(
-                H2Server.class.getClassLoader().getResource("init/drop_schema.sql").getFile()));
-        RunScript.execute(connection, new FileReader(
-                H2Server.class.getClassLoader().getResource("init/init_schema.sql").getFile()));
-        RunScript.execute(connection, new FileReader(
-                H2Server.class.getClassLoader().getResource("init/data.sql").getFile()));
+        RunScript.execute(connection, new InputStreamReader(
+                H2Server.class.getClassLoader().getResourceAsStream("init/drop_schema.sql")));
+        RunScript.execute(connection, new InputStreamReader(
+                H2Server.class.getClassLoader().getResourceAsStream("init/init_schema.sql")));
+        RunScript.execute(connection, new InputStreamReader(
+                H2Server.class.getClassLoader().getResourceAsStream("init/data.sql")));
     }
 }

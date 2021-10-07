@@ -1,25 +1,17 @@
 package com.evsyukoov.project.dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import java.util.Collections;
 
 public interface DAO<T> {
-
-    SessionFactory factory = new Configuration()
-                .configure("hibernate_bank.cfg.xml")
-                .buildSessionFactory();
 
     /**
      * @param entity
      * объект для сохранения в базе данных
      */
     default void save(T entity) {
-        try (Session session = factory.getCurrentSession()) {
-            session.beginTransaction();
-            session.save(entity);
-            session.getTransaction().commit();
-        }
+        new HibernateTransactionManager<T>().
+                doTransactionIn(((objectToDatabase, session) -> session.save(objectToDatabase)),
+                Collections.singletonList(entity));
     }
 
     /**
@@ -30,4 +22,7 @@ public interface DAO<T> {
      * @return
      */
     T getEntity(String uniqIdentificator);
+
+
+
 }

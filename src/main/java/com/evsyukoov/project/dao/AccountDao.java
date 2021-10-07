@@ -4,16 +4,19 @@ import com.evsyukoov.project.model.server.Account;
 import com.evsyukoov.project.model.server.Card;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.Set;
 
+@Repository
 public class AccountDao implements DAO<Account> {
+
+    @Autowired
+    HibernateTransactionManager<Account> manager;
 
     @Override
     public Account getEntity(String accountNumber) {
-        Account account;
-        try(Session session = factory.getCurrentSession()) {
-            session.beginTransaction();
+        return manager.doTransactionOut(((uniqIdentifier, session) -> {
             Query<Account> query = session.createQuery("FROM Account WHERE accountNumber=:accountNumber",
                     Account.class);
             query.setMaxResults(1);
@@ -21,9 +24,7 @@ public class AccountDao implements DAO<Account> {
             if (query.getResultList().isEmpty()) {
                 return null;
             }
-            account = query.getSingleResult();
-            session.getTransaction().commit();
-        }
-        return account;
+            return query.getSingleResult();
+        }), accountNumber);
     }
 }

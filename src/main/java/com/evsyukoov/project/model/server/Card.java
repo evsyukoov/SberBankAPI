@@ -14,7 +14,7 @@ public class Card {
 
     @Id
     @Column(name = "card_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cardId;
 
     @ManyToOne( cascade = CascadeType.ALL)
@@ -33,6 +33,10 @@ public class Card {
 
     @Column(name = "balance")
     private BigDecimal balance;
+
+    @Version
+    @Column(name = "version")
+    private long version;
 
     public int getCardId() {
         return cardId;
@@ -80,5 +84,13 @@ public class Card {
 
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

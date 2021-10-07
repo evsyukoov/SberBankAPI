@@ -30,6 +30,10 @@ public class Account {
     @JoinColumn(name = "contragent_id", referencedColumnName = "contragent_id")
     private Contragent contragent;
 
+    @Version
+    @Column(name = "version")
+    private long version;
+
     public Set<Card> getCards() {
         return cards;
     }
@@ -68,5 +72,13 @@ public class Account {
 
     public void setContragent(Contragent contragent) {
         this.contragent = contragent;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

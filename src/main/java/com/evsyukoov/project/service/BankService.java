@@ -13,13 +13,13 @@ import com.evsyukoov.project.model.server.Account;
 import com.evsyukoov.project.model.server.Card;
 import com.evsyukoov.project.utils.CommonUtils;
 import com.evsyukoov.project.utils.DateTimeUtil;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Service
 public class BankService {
 
     private CardDao cardDao;
@@ -28,7 +28,9 @@ public class BankService {
 
     public static final int ATTEMPT = 5;
 
-    public BankService() {
+    public BankService(CardDao cardDao, AccountDao accountDao) {
+        this.cardDao = cardDao;
+        this.accountDao = accountDao;
     }
 
     private static String generateCardNumber(CardType type) {
