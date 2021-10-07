@@ -102,12 +102,4 @@ public class BankService {
     public List<Card> getAllCards(String accountNumber) {
         return cardDao.getCards(accountNumber);
     }
-
-    public void setCardDao(CardDao cardDao) {
-        this.cardDao = cardDao;
-    }
-
-    public void setAccountDao(AccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
 }
