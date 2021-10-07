@@ -13,8 +13,11 @@ import java.util.List;
 @Repository
 public class ContragentDao implements DAO<Contragent> {
 
-    @Autowired
     HibernateTransactionManager<Contragent> manager;
+
+    public ContragentDao(HibernateTransactionManager<Contragent> manager) {
+        this.manager = manager;
+    }
 
     @Override
     public Contragent getEntity(String id) {

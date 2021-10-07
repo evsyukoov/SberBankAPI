@@ -10,8 +10,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDao implements DAO<User> {
 
-    @Autowired
     HibernateTransactionManager<User> manager;
+
+    public UserDao(HibernateTransactionManager<User> manager) {
+        this.manager = manager;
+    }
 
     @Override
     public User getEntity(String login) {

@@ -11,8 +11,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AccountDao implements DAO<Account> {
 
-    @Autowired
     HibernateTransactionManager<Account> manager;
+
+    public AccountDao(HibernateTransactionManager<Account> manager) {
+        this.manager = manager;
+    }
 
     @Override
     public Account getEntity(String accountNumber) {

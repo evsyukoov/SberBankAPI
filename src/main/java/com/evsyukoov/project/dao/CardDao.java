@@ -15,8 +15,11 @@ import java.util.stream.Stream;
 @Repository
 public class CardDao implements DAO<Card> {
 
-    @Autowired
     HibernateTransactionManager<Card> manager;
+
+    public CardDao(HibernateTransactionManager<Card> manager) {
+        this.manager = manager;
+    }
 
     public void update(Card ... entities) {
         manager.doTransactionIn(((objectToDatabase, session) ->

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class HibernateTransactionManager<T> {
-    private static SessionFactory factory;
+    private final static SessionFactory factory;
 
     static {
         factory = new Configuration()

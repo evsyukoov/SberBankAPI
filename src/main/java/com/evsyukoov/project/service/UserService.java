@@ -14,8 +14,11 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
     UserDao dao;
+
+    public UserService(UserDao dao) {
+        this.dao = dao;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
